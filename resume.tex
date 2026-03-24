@@ -1,0 +1,47 @@
+% !TEX program = xelatex
+\documentclass[11pt,a4paper]{resume}
+
+\begin{document}
+\ResumeName{你的姓名}
+\ResumeSubtitle{Java 后端 / 求职方向}
+\ResumeContacts{
+  \faPhone\ 你的电话 \enspace | \enspace
+  \faEnvelope\ \href{mailto:your@email.com}{your@email.com} \enspace | \enspace
+  \faGithub\ \href{https://github.com/yourname}{yourname} \enspace | \enspace
+  \faGlobe\ \href{https://example.com}{example.com}
+}
+\MakeResumeHeader
+
+\section{教育经历}
+\ResumeEntry{你的学校}{你的专业}{2023.09 -- 2027.06}
+\ResumeMeta{可补充 GPA、排名、主修课程、奖项等信息。}
+
+\section{实习经历}
+\ResumeEntry{某科技公司}{Java 后端实习生 / 示例项目}{2024.06 -- 2024.09}
+\ResumeMeta{技术栈：Spring Boot, MySQL, Redis}
+\ResumeDescription{一句话说明业务背景、你的职责范围和项目价值，尽量写清你负责的部分。}
+\begin{ResumeItemList}
+  \item \textbf{模块开发：} 描述你负责的核心模块、接口或微服务，以及你承担的职责边界。
+  \item \textbf{性能优化：} 描述你如何处理慢 SQL、缓存、异步任务、并发一致性或系统稳定性问题。
+  \item \textbf{结果表达：} 尽量补充真实结果、收益或可复盘的问题定位过程。
+\end{ResumeItemList}
+
+\section{个人项目}
+\ResumeEntry{示例项目名称}{个人项目 / 后端负责人}{2024.01 -- 2024.05}
+\ResumeMeta{技术栈：Spring Boot, PostgreSQL, Redis, RabbitMQ}
+\ResumeDescription{一句话说明项目功能、业务价值和核心亮点。}
+\begin{ResumeItemList}
+  \item \textbf{权限设计：} 描述登录、鉴权、RBAC 或资源级权限控制设计。
+  \item \textbf{业务设计：} 描述核心业务流程、关键接口或数据模型设计。
+  \item \textbf{稳定性优化：} 描述缓存、消息队列、幂等、限流、重试或监控相关实践。
+\end{ResumeItemList}
+
+\section{技术能力}
+\begin{ResumeItemList}
+  \item \textbf{Java 基础：} 按你真实掌握情况填写集合、多线程、JVM、并发工具等。
+  \item \textbf{Spring 生态：} 按你真实掌握情况填写 Spring Boot、Spring MVC、Spring Security 等。
+  \item \textbf{数据库与中间件：} 按你真实掌握情况填写 MySQL、Redis、RabbitMQ 等。
+  \item \textbf{工程化能力：} 按你真实掌握情况填写 Git、Docker、Linux 等。
+\end{ResumeItemList}
+
+\end{document}

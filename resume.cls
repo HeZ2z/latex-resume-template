@@ -1,131 +1,97 @@
-\RequirePackage{expl3,l3keys2e}
-\ProvidesExplClass{resume}
-{2022-12-26}{0.1.0}{Another Resume Class by Feng Kaiyu}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{resume}[2026/03/25 v0.2.0 Open-source friendly resume class]
 
-\PassOptionsToPackage{quiet}{xeCJK}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexart}}
 \ProcessOptions\relax
-\LoadClass[zihao=5,autoindent=0.5em,fontset=fandol]{ctexart}
+\LoadClass[zihao=5,autoindent=0pt,fontset=fandol]{ctexart}
 
-\RequirePackage{geometry}
-\RequirePackage{fancyhdr}
+\RequirePackage{array}
 \RequirePackage{enumitem}
-\RequirePackage[para]{footmisc}
-\RequirePackage[colorlinks=false,hidelinks]{hyperref}
-\RequirePackage{xeCJKfntef}
+\RequirePackage{fontawesome5}
+\RequirePackage{fontspec}
+\RequirePackage[margin=1.1cm,top=0.8cm,bottom=0.8cm]{geometry}
+\RequirePackage[hidelinks,unicode]{hyperref}
+\RequirePackage{setspace}
+\RequirePackage{tabularx}
+\RequirePackage{titlesec}
 \RequirePackage{xcolor}
 
 \pagestyle{empty}
-\geometry{a4paper,margin=1.2cm, bottom=0.5cm}
-
-\seq_new:N \g__resume_contacts_seq
-\tl_new:N \g__resume_title_name_tl
-
 \pagenumbering{gobble}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setstretch{0.94}
 
-\ctexset{
-  section = {
-    nameformat = {},
-    number = {},
-    format = \noindent \zihao{4} \heiti \__resume_section_title_format:n,
-    indent = -1em,
-    afterskip = 1em,
-    beforeskip = 0.2em,
-  },
-}
+\IfFontExistsTF{TeX Gyre Heros}
+  {
+    \setmainfont{TeX Gyre Heros}[Ligatures=TeX]
+    \setsansfont{TeX Gyre Heros}[Ligatures=TeX]
+  }
+  {}
+\IfFontExistsTF{Latin Modern Mono}
+  {\setmonofont{Latin Modern Mono}}
+  {}
+\renewcommand{\familydefault}{\sfdefault}
 
-\setlist{
-  labelsep=2pt,
-  labelwidth=5pt,
+\definecolor{resumeaccent}{RGB}{25,80,150}
+\definecolor{resumemuted}{RGB}{90,90,90}
+
+\setlist[itemize]{
+  noitemsep,
+  topsep=2pt,
+  itemsep=2pt,
+  parsep=0pt,
+  partopsep=0pt,
   leftmargin=1.3em,
-  itemsep=0em,
-  parsep=0.20em,
-  topsep=0em,
+  labelsep=0.5em
 }
 
-\linespread{1.3}
-\newcounter{resumebookmark}
+\titleformat{\section}
+  {\Large\bfseries\color{resumeaccent}}
+  {}
+  {0pt}
+  {}
+  [\color{resumeaccent}\titlerule]
+\titlespacing*{\section}{0pt}{2.2ex}{0.8ex}
 
-\cs_new:Npn \__resume_append_concat:n #1
-{
-  \seq_put_right:Nn \g__resume_contacts_seq {#1}
-}
+\newcommand{\@resumename}{}
+\newcommand{\@resumesubtitle}{}
+\newcommand{\@resumecontacts}{}
 
-\cs_new:Npn \__resume_section_title_format:n #1
-{#1 \vspace{3pt} \hrule}
+\newcommand{\ResumeName}[1]{\gdef\@resumename{#1}}
+\newcommand{\ResumeSubtitle}[1]{\gdef\@resumesubtitle{#1}}
+\newcommand{\ResumeContacts}[1]{\gdef\@resumecontacts{#1}}
 
-\NewDocumentCommand{\ResumeContact}{m}
-{
-  \__resume_append_concat:n {#1}
-}
-
-\NewDocumentCommand{\ResumeContacts}{m}
-{
-  \seq_set_from_clist:Nn \l__input_seq:N {#1}
-  \seq_map_inline:Nn \l__input_seq:N
-  {
-    \__resume_append_concat:n {##1}
-  }
-}
-
-\NewDocumentCommand{\ResumeName}{m}
-{
-  \tl_set:Nn \g__resume_title_name_tl {#1}
-}
-
-\NewDocumentCommand{\ResumeTitle}{}
-{
+\newcommand{\MakeResumeHeader}{
   \begin{center}
-    \zihao{-2} \heiti \g__resume_title_name_tl
-  \end{center}
-  \vspace{-1.4em}
-  \begin{center}
-    \seq_use:Nnnn \g__resume_contacts_seq {~|~} {~|~} {~|~}
+    {\Huge\bfseries \@resumename \par}
+    \vspace{0.35em}
+    {\large \@resumesubtitle \par}
+    \vspace{0.45em}
+    {\small \@resumecontacts \par}
   \end{center}
 }
 
-\NewDocumentCommand{\ResumeItem}{omoo}
-{
-  {
-    \zihao{-4}
-    \par
-    \noindent
-    {
-      \heiti
-      #2
-
-      \IfValueTF{#1}
-      {
-        \pdfbookmark[2]{#1}{subsec:\arabic{resumebookmark}}
-      }
-      {
-        \pdfbookmark[2]{#2}{subsec:\arabic{resumebookmark}}
-      }
-      \stepcounter{resumebookmark}
-    }
-    \IfValueT{#3}{
-      \tl_if_empty:nF {#3} {
-        \ |
-        \textit{
-          #3
-        }
-      }
-    }
-    \hfill
-    \IfValueT{#4}{
-      #4
-    }
-    \par
-  }
+\newcommand{\ResumeEntry}[3]{
+  \noindent
+  \begin{tabularx}{\textwidth}{@{}X>{\raggedleft\arraybackslash}p{0.26\textwidth}@{}}
+    \textbf{#1} & \textcolor{resumemuted}{#3} \\
+    \textcolor{resumemuted}{#2} & \\
+  \end{tabularx}
 }
 
-\NewDocumentCommand{\GrayText}{m}
-{
-  \textcolor{gray}{#1}
+\newcommand{\ResumeMeta}[1]{
+  \vspace{0.15em}
+  {\small\textcolor{resumemuted}{#1}\par}
 }
 
-\NewDocumentCommand{\ResumeUrl}{mm}
-{
-  \href{#1}{\CJKunderline{#2}}
+\newcommand{\ResumeDescription}[1]{
+  \vspace{0.15em}
+  {\small #1\par}
 }
+
+\newenvironment{ResumeItemList}
+  {\begin{itemize}}
+  {\end{itemize}}
 
 \endinput
