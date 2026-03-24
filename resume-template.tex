@@ -1,0 +1,83 @@
+% !TEX program = xelatex
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1.1cm, top=0.8cm, bottom=0.8cm]{geometry}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+\usepackage{setspace}
+
+\pagestyle{empty}
+\definecolor{mainblue}{RGB}{25,80,150}
+\setmainfont{Helvetica Neue}[Ligatures=TeX]
+\setmonofont{Menlo}
+\setCJKmainfont{FandolSong-Regular.otf}
+\setCJKsansfont{FandolHei-Regular.otf}
+\renewcommand{\familydefault}{\sfdefault}
+\setlist[itemize]{noitemsep, topsep=0pt, left=0pt, itemsep=2pt, parsep=0pt, labelsep=0.5em, leftmargin=1em}
+\titleformat{\section}{\large\bfseries\color{mainblue}}{}{0em}{}[\color{mainblue}\titlerule]
+\titlespacing*{\section}{0pt}{2.5ex}{1ex}
+
+\newcommand{\projecttitle}[1]{\textbf{#1}}
+\newcommand{\techstack}[1]{\textit{技术栈: #1}}
+\newcommand{\projectdesc}[1]{\textbf{项目简介：}#1}
+
+\begin{document}
+\setstretch{0.92}
+
+\begin{center}
+    {\Huge\bfseries 你的姓名} \\[1em]
+    {\large Java 后端 / 求职方向} \\[0.5em]
+\end{center}
+
+\section*{联系方式}
+\begin{tabularx}{\textwidth}{X X X X}
+    \faPhone\ 电话: 你的电话 &
+    \faEnvelope\ 邮箱: your@email.com &
+    \faGithub\ GitHub: yourname &
+    \faGlobe\ 个人网站: example.com
+\end{tabularx}
+
+\section*{教育经历}
+\begin{tabularx}{\textwidth}{@{}XXX@{}}
+  你的学校 & 你的专业 & 2023.09 -- 2027.06
+\end{tabularx}
+
+\section*{实习经历}
+\projecttitle{某科技公司 - 示例项目} \hfill \\
+\techstack{Spring Boot, MySQL, Redis}
+
+\projectdesc{一句话说明业务背景、你的职责和项目价值。}
+
+\begin{itemize}
+    \item \textbf{模块开发：} 描述你负责的核心模块、接口或微服务，以及你承担的职责边界。
+    \item \textbf{性能优化：} 描述你如何处理慢 SQL、缓存、异步任务、并发一致性或系统稳定性问题。
+    \item \textbf{结果表达：} 尽量补充真实结果、收益或可复盘的问题定位过程。
+\end{itemize}
+
+\section*{个人项目}
+\projecttitle{示例项目名称} \hfill \\
+\techstack{Spring Boot, PostgreSQL, Redis, RabbitMQ}
+
+\projectdesc{一句话说明项目功能和核心亮点。}
+
+\begin{itemize}
+    \item \textbf{权限设计：} 描述登录、鉴权、RBAC 或资源级权限控制设计。
+    \item \textbf{业务设计：} 描述核心业务流程、关键接口或数据模型设计。
+    \item \textbf{稳定性优化：} 描述缓存、消息队列、幂等、限流、重试或监控相关实践。
+\end{itemize}
+
+\section*{技术能力}
+\begin{itemize}
+    \item \textbf{Java 基础：} 按你真实掌握情况填写集合、多线程、JVM、并发工具等。
+    \item \textbf{Spring 生态：} 按你真实掌握情况填写 Spring Boot、Spring MVC、Spring Security 等。
+    \item \textbf{数据库与中间件：} 按你真实掌握情况填写 MySQL、Redis、RabbitMQ 等。
+    \item \textbf{工程化能力：} 按你真实掌握情况填写 Git、Docker、Linux 等。
+\end{itemize}
+
+\end{document}
